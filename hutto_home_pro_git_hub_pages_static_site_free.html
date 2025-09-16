@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hutto Home Pro — Handyman & Home Services (Hutto, TX)</title>
+  <meta name="description" content="Hutto Home Pro — reliable handyman and home services for Hutto, Round Rock, Pflugerville, and North Austin. Fast quotes, on-time service, great reviews." />
+  <link rel="preconnect" href="https://unpkg.com"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <style>
+    :root {
+      --bg: #0f172a;      /* slate-900 */
+      --card: #111827;    /* gray-900 */
+      --text: #e5e7eb;    /* gray-200 */
+      --muted: #9ca3af;   /* gray-400 */
+      --accent: #f59e0b;  /* amber-500 */
+      --accent-2: #22d3ee;/* cyan-400 */
+    }
+    html, body { height: 100%; }
+    body {
+      margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 20% -10%, rgba(34,211,238,0.15), transparent 60%),
+                  radial-gradient(1000px 500px at 110% 10%, rgba(245,158,11,0.12), transparent 60%),
+                  var(--bg);
+      color: var(--text);
+    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+    header { display:flex; align-items:center; justify-content:space-between; gap:16px; padding: 16px 0; }
+    .logo { display:flex; align-items:center; gap:12px; font-weight:700; letter-spacing:0.2px; }
+    .logo-mark { width:36px; height:36px; border-radius:12px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); display:grid; place-items:center; box-shadow: 0 8px 24px rgba(0,0,0,.35); }
+    .logo-mark span { font-weight:900; color:#0b1020; }
+    .btn { display:inline-flex; align-items:center; gap:10px; background:linear-gradient(135deg, var(--accent), #fbbf24); color:#111827; padding:12px 16px; border-radius:12px; text-decoration:none; font-weight:700; box-shadow: 0 8px 24px rgba(245,158,11,.25); }
+    .btn.outline { background:transparent; color:var(--text); border:1px solid rgba(229,231,235,.15); box-shadow:none; }
+    .grid { display:grid; gap:20px; }
+    .hero { padding: 48px 0 12px; display:grid; gap:20px; grid-template-columns: 1.2fr 1fr; align-items:center; }
+    .card { background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02)); border: 1px solid rgba(255,255,255,0.06); border-radius: 16px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,.25); backdrop-filter: blur(6px); }
+    h1 { font-size: clamp(28px, 3.2vw, 44px); line-height:1.1; margin: 0 0 10px; }
+    h2 { font-size: clamp(22px, 2.4vw, 30px); margin:0 0 10px; }
+    p.lead { color: var(--muted); font-size: 1.05rem; }
+    .badges { display:flex; flex-wrap:wrap; gap:10px; margin: 10px 0 0; }
+    .badge { font-size: .85rem; padding:8px 10px; border-radius:999px; background: #0b1222; border:1px solid rgba(255,255,255,0.08); color:#cbd5e1; }
+    .services { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+    .service { padding: 18px; border-radius:14px; border:1px solid rgba(255,255,255,0.06); background:#0c1326; }
+    .service h3 { margin: 0 0 6px; font-size: 1.05rem; }
+    .service p { margin:0; color:#b6c2d9; font-size:.95rem; }
+    .cta-row { display:flex; gap:12px; flex-wrap:wrap; margin-top:14px; }
+    #map { height: 360px; width: 100%; border-radius: 14px; overflow: hidden; border:1px solid rgba(255,255,255,0.08); }
+    footer { margin: 36px 0 24px; color:#9aa5b1; font-size:.9rem; display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:space-between; }
+    .list { margin:0; padding-left:18px; color:#cbd5e1; }
+    @media (max-width: 940px){ .hero { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">
+        <div class="logo-mark"><span>HH</span></div>
+        <div>Hutto <span style="color:var(--accent)">Home</span> Pro</div>
+      </div>
+      <nav class="cta-row">
+        <a class="btn outline" href="tel:+15125550123">Call</a>
+        <a class="btn" href="mailto:quotes@huttohome.pro?subject=Quote%20Request&body=Hi%20HHP%2C%20I%27d%20like%20a%20quote%20for%3A%20">Get a Quote</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="card">
+        <h1>Reliable Handyman & Home Services for Hutto, TX</h1>
+        <p class="lead">Fast quotes. On‑time arrivals. Tidy finishes. Serving Hutto, Round Rock, Pflugerville, and North Austin.</p>
+        <div class="badges">
+          <span class="badge">Insured</span>
+          <span class="badge">Same‑Week Scheduling</span>
+          <span class="badge">Text & WhatsApp</span>
+        </div>
+        <div class="cta-row">
+          <a class="btn" href="https://nextdoor.com/pages/tino-esparza-hutto-tx-1/" target="_blank" rel="noopener">View Nextdoor Profile</a>
+          <a class="btn outline" href="https://wa.me/15125550123?text=Hi%20Hutto%20Home%20Pro%2C%20I%27d%20like%20a%20quote." target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </div>
+      <div class="grid" style="gap:16px;">
+        <div class="card">
+          <h2>Top Services</h2>
+          <div class="grid services">
+            <div class="service"><h3>TV Mounting</h3><p>Stud‑secure install, cable tidy, tilt/full‑motion.</p></div>
+            <div class="service"><h3>Furniture Assembly</h3><p>IKEA, Wayfair, patio sets, beds, sheds.</p></div>
+            <div class="service"><h3>Minor Plumbing</h3><p>Faucets, disposals, toilets (no gas lines).</p></div>
+            <div class="service"><h3>Electrical Fixtures</h3><p>Ceiling fans, lights, dimmers (non‑permit).</p></div>
+            <div class="service"><h3>Door & Trim</h3><p>Repairs, weather‑strip, handles, locks.</p></div>
+            <div class="service"><h3>Drywall & Paint</h3><p>Small holes, touch‑ups, accent walls.</p></div>
+          </div>
+        </div>
+        <div class="card">
+          <h2>Service Area</h2>
+          <div id="map"></div>
+          <p class="lead" style="margin-top:10px;">We typically cover a ~20‑mile radius from Hutto. Ask if you’re nearby.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" style="margin-top:16px;">
+      <h2>How to Book</h2>
+      <ol class="list">
+        <li>Send a few photos of the job by text/WhatsApp or email.</li>
+        <li>Get an all‑in price and earliest slot.</li>
+        <li>Confirm. We arrive on time and clean up.</li>
+      </ol>
+      <div class="cta-row">
+        <a class="btn" href="sms:+15125550123?&body=Hi%20Hutto%20Home%20Pro%2C%20here%20are%20photos%20of%20my%20project…">Text Photos</a>
+        <a class="btn outline" href="mailto:quotes@huttohome.pro?subject=Quote%20Request">Email Photos</a>
+      </div>
+    </section>
+
+    <footer>
+      <div>
+        © <span id="yr"></span> Hutto Home Pro • Hutto, Texas
+      </div>
+      <div>
+        Map © OpenStreetMap contributors — Tiles via OSM servers
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // --- Leaflet Map (OpenStreetMap tiles) ---
+    const map = L.map('map', { scrollWheelZoom: false }).setView([30.5427, -97.5469], 11); // Center: Hutto, TX
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    const serviceCircle = L.circle([30.5427, -97.5469], {
+      radius: 16000, // ~10 miles
+      color: '#f59e0b',
+      weight: 1,
+      fillColor: '#f59e0b',
+      fillOpacity: 0.08
+    }).addTo(map);
+
+    const marker = L.marker([30.5427, -97.5469]).addTo(map);
+    marker.bindPopup('<b>Hutto Home Pro</b><br>Primary service area').openPopup();
+  </script>
+</body>
+</html>
